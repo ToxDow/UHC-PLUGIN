@@ -1,0 +1,26 @@
+enable_auto_start: true
+auto_start: 2
+countdown: 30 # in seconds
+world_size: 1000
+overworld: world
+nether: world_nether
+commands_at_end_delay: 30 # Delay ( in seconds ), -1 = disable
+commands_at_end:
+  - say This was a good game !
+  - say Come back when you want to play again
+  - restart
+messages:
+  prefix: "&c[&r&aOpenUHC&c]&r "
+  countdown: "The game will start in {SECS} seconds."
+  game_start: "Let the slaughter begin !"
+  countdown_cancelled: "Wait, there aren't enough players, the game can't start !"
+  game_started_kick: "I'm sorry but you can't join : the game has already started !"
+  left_in_game: "{PLAYER} ran away ! {LEFT} players are left."
+  died: "{PLAYER} died ! {LEFT} players are left."
+  spectator: "You are now a spectator of the game."
+  generating_spawn_areas: "Generating spawn areas [{DONE}/{TOTAL}]"
+  won: "{NAME} won the game !"
+  scoreboard_title: "&bOpenUHC &r|&c {TIME}"
+  scoreboard_players: "Players"
+  scoreboard_initializing: "&bOpenUHC &r|&c Initializing"
+  kick_shutdown: "This was a nice game ! Come back later if you wish to play again"

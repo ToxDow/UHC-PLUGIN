@@ -1,0 +1,14 @@
+name: OpenUHC
+author: Gnomino
+website: https://github.com/Gnomino/OpenUHC
+version: 0.1-dev
+main: eu.gnomino.openuhc.OpenUHC
+commands:
+  uhcstart:
+    description: "Starts the UHC game"
+    usage: "/uhcstart"
+    permission: openuhc.start
+permissions:
+  openuhc.start:
+    default: op
+    description: "Allows to start the game"
