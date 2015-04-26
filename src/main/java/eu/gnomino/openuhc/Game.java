@@ -127,6 +127,10 @@ public class Game {
             }
         }
         timerTask = (new CounterThread(0, pl)).runTaskTimer(pl, 0, 20);
+        WorldBorder wb = pl.getServer().getWorld(pl.getConfig().getString("overworld")).getWorldBorder();
+        wb.setSize(pl.getConfig().getInt("world_border_final_size"), pl.getConfig().getInt("world_border_time_to_final_size"));
+        wb = pl.getServer().getWorld(pl.getConfig().getString("nether")).getWorldBorder();
+        wb.setSize(pl.getConfig().getInt("world_border_final_size")/8,  pl.getConfig().getInt("world_border_time_to_final_size"));
     }
 
     public void broadcastMessage(String message) {
@@ -174,6 +178,7 @@ public class Game {
         if (playersNb() == 1) {
             for (Map.Entry<UUID, UHCPlayer> lastPlayerEntry : players.entrySet()) {
                 UHCPlayer lastPlayer = lastPlayerEntry.getValue();
+                lastPlayer.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
                 broadcastMessage(pl._("won").replace("{NAME}", lastPlayer.getBukkitPlayer().getDisplayName()));
                 timerTask.cancel();
                 status = GameStatus.FINISHED;

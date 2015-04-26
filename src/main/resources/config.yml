@@ -10,6 +10,8 @@ commands_at_end:
   - say This was a good game !
   - say Come back when you want to play again
   - restart
+world_border_final_size: 50
+world_border_time_to_final_size: 7200
 messages:
   prefix: "&c[&r&aOpenUHC&c]&r "
   countdown: "The game will start in {SECS} seconds."
