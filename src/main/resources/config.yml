@@ -28,3 +28,5 @@ messages:
   scoreboard_players: "Players"
   scoreboard_initializing: "&bOpenUHC &r|&c Initializing"
   kick_shutdown: "This was a nice game ! Come back later if you wish to play again"
+  join_message_waiting: "{PLAYER} joined the game. We'll start when {LEFT} other players join"
+  join_message: "{PLAYER} joined the game"

@@ -84,12 +84,6 @@ public class Game {
         HashMap<Player, Location> spawnLocations = new HashMap<Player, Location>();
         for (Map.Entry<UUID, UHCPlayer> entry : players.entrySet()) {
             Player p = entry.getValue().getBukkitPlayer();
-            p.setScoreboard(scoreboard);
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setLevel(0);
-            p.setExp(0);
-            p.setScoreboard(getScoreboard());
-            p.setHealth(p.getMaxHealth());
             Block b;
             double x, y, z;
             do {
@@ -123,6 +117,14 @@ public class Game {
         }
         broadcastMessage(pl._("game_start"));
         for (Map.Entry<Player, Location> ple : spawnLocations.entrySet()) {
+            Player p = ple.getKey();
+            p.setScoreboard(scoreboard);
+            p.setGameMode(GameMode.SURVIVAL);
+            p.getInventory().clear();
+            p.setLevel(0);
+            p.setExp(0);
+            p.setScoreboard(getScoreboard());
+            p.setHealth(p.getMaxHealth());
             ple.getKey().teleport(ple.getValue());
             if(pl.getConfig().getInt("invincible_period") > 0) {
                 ple.getKey().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*pl.getConfig().getInt("invincible_period"), 99));
