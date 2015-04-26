@@ -4,6 +4,7 @@ countdown: 30 # in seconds
 world_size: 1000
 overworld: world
 nether: world_nether
+invincible_period: 60
 commands_at_end_delay: 30 # Delay ( in seconds ), -1 = disable
 commands_at_end:
   - say This was a good game !

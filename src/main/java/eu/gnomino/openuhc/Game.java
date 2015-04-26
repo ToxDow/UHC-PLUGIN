@@ -4,6 +4,8 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -120,6 +122,9 @@ public class Game {
         broadcastMessage(pl._("game_start"));
         for (Map.Entry<Player, Location> ple : spawnLocations.entrySet()) {
             ple.getKey().teleport(ple.getValue());
+            if(pl.getConfig().getInt("invincible_period") > 0) {
+                ple.getKey().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20*pl.getConfig().getInt("invincible_period"), 99));
+            }
         }
         timerTask = (new CounterThread(0, pl)).runTaskTimer(pl, 0, 20);
     }
