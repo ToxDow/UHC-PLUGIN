@@ -172,25 +172,27 @@ public class Game {
 
     public void removePlayer(Player p) {
         UHCPlayer up = players.get(p.getUniqueId());
-        if (up.isInGame()) {
+        if (status == GameStatus.PLAYING && up.isInGame()) {
             kill(up);
             if(playersNb() > 2)
                 broadcastMessage(pl._("left_in_game").replace("{PLAYER}", p.getDisplayName()).replace("{LEFT}", "" + (playersNb() - 1)));
         }
         players.remove(p.getUniqueId());
-        objective.getScore("Players").setScore(playersNb());
-        if (playersNb() == 1) {
-            for (Map.Entry<UUID, UHCPlayer> lastPlayerEntry : players.entrySet()) {
-                UHCPlayer lastPlayer = lastPlayerEntry.getValue();
-                lastPlayer.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
-                broadcastMessage(pl._("won").replace("{NAME}", lastPlayer.getBukkitPlayer().getDisplayName()));
-                timerTask.cancel();
-                status = GameStatus.FINISHED;
-                int delayInSecondsBeforeShutdown = pl.getConfig().getInt("commands_at_end_delay");
-                if(delayInSecondsBeforeShutdown >= 0) {
-                    (new ShutdownTask(pl)).runTaskLater(pl, 20*delayInSecondsBeforeShutdown);
+        if(status == GameStatus.PLAYING) {
+            objective.getScore("Players").setScore(playersNb());
+            if (playersNb() == 1) {
+                for (Map.Entry<UUID, UHCPlayer> lastPlayerEntry : players.entrySet()) {
+                    UHCPlayer lastPlayer = lastPlayerEntry.getValue();
+                    lastPlayer.getBukkitPlayer().setGameMode(GameMode.SPECTATOR);
+                    broadcastMessage(pl._("won").replace("{NAME}", lastPlayer.getBukkitPlayer().getDisplayName()));
+                    timerTask.cancel();
+                    status = GameStatus.FINISHED;
+                    int delayInSecondsBeforeShutdown = pl.getConfig().getInt("commands_at_end_delay");
+                    if(delayInSecondsBeforeShutdown >= 0) {
+                        (new ShutdownTask(pl)).runTaskLater(pl, 20*delayInSecondsBeforeShutdown);
+                    }
+                    break;
                 }
-                break;
             }
         }
     }
