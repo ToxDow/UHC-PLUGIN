@@ -63,7 +63,8 @@ public class Game {
     public void start() throws GameStartedException {
         if (status == GameStatus.COUNTDOWN || status == GameStatus.WAITING) {
             status = GameStatus.PLAYING;
-            broadcastMessage(pl._("generating_spawn_areas").replace("{TOTAL}", "" + playersNb()).replace("{DONE}", "0"));
+            if(pl.getConfig().getBoolean("broadcast_generation_progress"))
+                broadcastMessage(pl._("generating_spawn_areas").replace("{TOTAL}", "" + playersNb()).replace("{DONE}", "0"));
         } else {
             throw new GameStartedException();
         }
@@ -112,11 +113,12 @@ public class Game {
             int viewDistance = pl.getServer().getViewDistance();
             for (int cx = c.getX() - viewDistance; cx <= c.getX() + viewDistance; cx++) {
                 for (int cz = c.getZ() - viewDistance; cz <= c.getZ() + viewDistance; cz++) {
-                    c.getWorld().regenerateChunk(cx, cz);
+                    c.getWorld().getChunkAt(cx, cz).load();
                 }
             }
             areasGenerated++;
-            broadcastMessage(pl._("generating_spawn_areas").replace("{TOTAL}", "" + playersNb()).replace("{DONE}", "" + areasGenerated));
+            if(pl.getConfig().getBoolean("broadcast_generation_progress"))
+                broadcastMessage(pl._("generating_spawn_areas").replace("{TOTAL}", "" + playersNb()).replace("{DONE}", "" + areasGenerated));
             spawnLocations.put(p, new Location(b.getWorld(), x, y, z));
         }
         broadcastMessage(pl._("game_start"));
